@@ -1,6 +1,6 @@
 # Select the data we want
 from bs4 import BeautifulSoup
-import requests, csv, os
+import requests, csv, os, re
 import pandas as pd
 
 # Crawl data from website
@@ -14,7 +14,7 @@ a_tags = soup.find_all('a')
 # Create a directory
 os.mkdir('info')
 
-# Write the data into a file
+# Write the links we crawled into a file
 with open('./info/PPI_USA.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile, dialect='excel')
     writer.writerow(['info'])
@@ -24,3 +24,43 @@ with open('./info/PPI_USA.csv', 'w', newline='') as csvfile:
         writer.writerow(df)
     csvfile.close()
 
+# Open the file we just create
+file = open('./info/PPI_USA.csv')
+readFile = str(file.readlines()).split(',')
+
+# Create a new directory that we gonna save all data
+os.mkdir('data')
+
+# Access data from each link which means an item
+for links in readFile:
+    link = links[2:-3]
+    if 'pc.data' in link:
+        res = requests.get(link)
+        content = re.compile("[^\n\r]+")
+        rows = content.findall(res.text)
+
+        # Access name of each item
+        title = link.split('.')[-1]
+
+        # Create path for each file through their names
+        fileName = os.path.join('./data/', title + '.csv')
+
+        # Open files and write data into the file
+        with open(fileName, 'w') as csvfile:
+            writer = csv.writer(csvfile, dialect='excel')
+            for row in rows:
+
+                # Use regular expression to parse the info from website
+                item = re.compile(
+                    "[ ]*([\\w\\d\\-\\.]+)[ ]*")
+
+                # Write data into files
+                rowData = []
+                for i in item.findall(row):
+                    rowData.append(i)
+                writer.writerow(rowData)
+
+        # Close the files
+        csvfile.close()
+    else:
+        pass
