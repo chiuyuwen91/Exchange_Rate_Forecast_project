@@ -76,7 +76,7 @@ for file in files:
         iter_f = iter(f)
 
         # Create an empty file to save all files
-        with open('./info/data_all.csv', 'w') as csvfile:
+        with open('./info/PPI_USA_all.csv', 'w') as csvfile:
             writer = csv.writer(csvfile, dialect='excel')
             for line in iter_f:
                 df = list(line.rstrip('\n').split(','))

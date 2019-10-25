@@ -983,11 +983,11 @@ industry_code,product_code,product_name
 315220,315220C1,"Men's and boys' work shirts, made from purchased fabrics"
 315220,315220C3,"Men's and boys' work clothing and washable service apparel (excl. work shirts and jeans), mfpm"
 315220,315220E,Men's and boys' other outerwear
-315220,3152200,"Men's and boys' nontailored coats, jackets, and vests (excl. ski apparel & work jackets), mfpm"
-315220,3.1522E+16,"Men's and boys' heavyweight nontailored coats, jackets, and vests (excl. ski apparel & work)"
-315220,3.1522E+17,"Men's and boys' lightweight nontailored coats, jackets, and vests (excl. ski apparel & work)"
-315220,315220000,"Men's and boys' shorts (including dress and athletic) and swimwear, made from purchased fabrics"
-315220,31522000000,"Men's and boys' sweaters, sweatpants, jogging suits, beachwear (excl. swimsuits), & ski apparel"
+315220,315220E1,"Men's and boys' nontailored coats, jackets, and vests (excl. ski apparel & work jackets), mfpm"
+315220,315220E11,"Men's and boys' heavyweight nontailored coats, jackets, and vests (excl. ski apparel & work)"
+315220,315220E12,"Men's and boys' lightweight nontailored coats, jackets, and vests (excl. ski apparel & work)"
+315220,315220E3,"Men's and boys' shorts (including dress and athletic) and swimwear, made from purchased fabrics"
+315220,315220E5,"Men's and boys' sweaters, sweatpants, jogging suits, beachwear (excl. swimsuits), & ski apparel"
 315220,315220M,Miscellaneous receipts
 315220,315220P,Primary products
 315220,315220S,Secondary products
@@ -1270,8 +1270,8 @@ industry_code,product_code,product_name
 322220,322220D,Uncoated single-web paper grocers' bags and sacks and variety and shopping bags
 322220,322220D9,"All other uncoated paper bags and pouches (including specialty bags, mothproof bags, etc.)"
 322220,322220E,"Shipping sacks and multiwall bags, all materials, except textiles"
-322220,3222200,"Single and double wall shipping sacks and bags, all materials, except textiles"
-322220,32222000,"Multiwall (three-ply or more) shipping sacks and bags, all materials, except textiles"
+322220,322220E1,"Single and double wall shipping sacks and bags, all materials, except textiles"
+322220,322220E2,"Multiwall (three-ply or more) shipping sacks and bags, all materials, except textiles"
 322220,322220F,Laminated aluminum foil rolls and sheets for flexible packaging uses
 322220,322220F3,"Adhesive or wax laminated aluminum foil/paper combinations, rolls and sheets"
 322220,322220G,"Pasted, lined, laminated, or surface-coated paperboard"
@@ -2373,8 +2373,8 @@ industry_code,product_code,product_name
 332420,332420A,"Metal tanks, completed at factory (standard line pressure)"
 332420,332420C,"Metal tanks, completed at factory (standard line nonpressure)"
 332420,332420E,"Metal tanks and vessels, custom fabricated at factory and field erected"
-332420,3324200,Ferrous metal pressure tanks and vessels (more than 24 inch diameter and 5 cu ft capacity)
-332420,33242000,"All other metal tanks and vessels, custom fabricated at the factory"
+332420,332420E1,Ferrous metal pressure tanks and vessels (more than 24 inch diameter and 5 cu ft capacity)
+332420,332420E2,"All other metal tanks and vessels, custom fabricated at the factory"
 332420,332420G,"Metal tanks and vessels, custom fabricated and field erected"
 332420,332420M,Miscellaneous receipts
 332420,332420P,Primary products
@@ -4961,3 +4961,4 @@ ATTDSV,ATTDSV,"Services less trade, transportation, and warehousing"
 AWHLTR,AWHLTR,Total wholesale trade industries
 OMFG--,OMFG--,Total manufacturing industries
 OMIN--,OMIN--,Total mining industries
+""
