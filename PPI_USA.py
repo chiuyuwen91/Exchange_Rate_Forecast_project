@@ -1,4 +1,3 @@
-# Select the data we want
 from bs4 import BeautifulSoup
 import requests, csv, os, re
 import pandas as pd
@@ -42,7 +41,7 @@ for links in readFile:
         # Access name of each item
         title = link.split('.')[-1]
 
-        # Create path for each file through their names
+        # Create path for each file(item) through their names
         fileName = os.path.join('./data/', title + '.csv')
 
         # Open files and write data into the file
@@ -64,3 +63,22 @@ for links in readFile:
         csvfile.close()
     else:
         pass
+
+# Combine all files into one
+path = './data'
+
+# Go through each files
+files = os.listdir(path)
+s = []
+for file in files:
+    if not os.path.isdir(file):
+        f = open(path + '/' + file)
+        iter_f = iter(f)
+
+        # Create an empty file to save all files
+        with open('./info/data_all.csv', 'w') as csvfile:
+            writer = csv.writer(csvfile, dialect='excel')
+            for line in iter_f:
+                df = list(line.rstrip('\n').split(','))
+                writer.writerow(df)
+            f.close()
