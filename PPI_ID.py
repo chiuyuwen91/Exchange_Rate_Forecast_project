@@ -36,9 +36,6 @@ for i in df['series_id']:
 
 # Drop the M13
 df = df[(True ^ df['period'].isin(['M13']))]
-
-# Drop the nan
-df['year'] = df['year'].dropna()
 df['date'] = df['year'].astype(str) + df['period']
 df['date'] = df['date'].str.replace('M', '-')
 

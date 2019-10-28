@@ -11,7 +11,7 @@ soup = BeautifulSoup(res.content, 'html.parser')
 a_tags = soup.find_all('a')
 
 # Create a directory
-os.mkdir('info')
+# os.mkdir('info')
 
 # Write the links we crawled into a file
 with open('./info/PPI_USA.csv', 'w', newline='') as csvfile:
@@ -28,7 +28,7 @@ file = open('./info/PPI_USA.csv')
 readFile = str(file.readlines()).split(',')
 
 # Create a new directory that we gonna save all data
-os.mkdir('data')
+# os.mkdir('data')
 
 # Access data from each link which means an item
 for links in readFile:
@@ -45,7 +45,7 @@ for links in readFile:
         fileName = os.path.join('./data/', title + '.csv')
 
         # Open files and write data into the file
-        with open(fileName, 'w') as csvfile:
+        with open(fileName, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile, dialect='excel')
             for row in rows:
 
@@ -76,7 +76,7 @@ for file in files:
         iter_f = iter(f)
 
         # Create an empty file to save all files
-        with open('./info/PPI_USA_all.csv', 'w') as csvfile:
+        with open('./info/PPI_USA_all.csv', 'w', newline='') as csvfile:
             writer = csv.writer(csvfile, dialect='excel')
             for line in iter_f:
                 df = list(line.rstrip('\n').split(','))

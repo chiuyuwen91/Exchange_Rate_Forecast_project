@@ -2,6 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
 
+rates = pd.read_csv('./info/USD_NTD_Rate02.csv', index_col=0)
+
 
 def makeFig(plt, title, xlabel, ylabel, fName):
     plt.xlabel(xlabel)
@@ -15,22 +17,23 @@ def makeFig(plt, title, xlabel, ylabel, fName):
 
 # Observe the whole data range and then specific data ranges
 for startYear, endYear in [[1964, 2019], [1999, 2006], [2006, 2011], [2011, 2019]]:
-    df_new = pd.read_csv('./info/forex_signals.csv', index_col=0)
+    df = pd.read_csv('./info/forex_signals.csv', index_col=0)
     # Keep only the data for the time range that we care about
     if startYear >= 1965:
-        df_new = df_new[df_new.index >= str(startYear) + '-01']
-        df_new = df_new[df_new.index < str(endYear) + '-01']
+        df = df[df.index >= str(startYear) + '-01']
+        df = df[df.index < str(endYear) + '-01']
     # Use the same date format we used for the exchange rate
 
-    df_new.index = pd.to_datetime(df_new.index)
+    df.index = pd.to_datetime(df.index)
 
-    # df_new.plot(legend=False)df_new[list(df_new)[:]]
+    # df.plot(legend=False)
 
     # Scale the PPI data
     scaler = MinMaxScaler()
-    df_new[list(df_new)] = scaler.fit_transform(df_new[list(df_new)])
+    # df[list(df)] = scaler.fit_transform(df[list(df)])
+    df[list(df)] = scaler.fit_transform(df[list(df)])
     # Join the exchange rate data with the PPI data
-    m = df_new[list(df_new)[:]].join(rates, how='inner').fillna(0)
+    m = df[list(df)[:]].join(rates, how='inner').fillna(0)
 
     correlations = (m.corr()['USD_NTD'].sort_values(ascending=False).dropna())
     correlations0 = len(correlations.astype(float))
