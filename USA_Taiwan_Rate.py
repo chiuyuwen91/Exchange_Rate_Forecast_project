@@ -70,3 +70,8 @@ dateNew['USD_NTD'].astype(float)
 dateNew = dateNew.set_index('Date').groupby(pd.Grouper(freq='M')).mean()
 dateNew = dateNew.drop(dateNew.index[len(dateNew.index)-1], axis=0)
 dateNew.to_csv('./info/USD_NTD_Rate03.csv')
+
+dateNew = pd.read_csv('./info/USD_NTD_Rate03.csv', low_memory=False)
+df_new = dateNew.drop(['Date'], axis=1)
+df_new.to_csv('./info/USD_NTD_Rate_Clean.csv', index=False, header=False)
+

@@ -41,8 +41,8 @@ def build_model(n_dense=6,
 
     return model
 
-X = pd.read_csv('C:/share_VM/work/Project_PPI/forex_signals_clean_2000_2019.csv')
-y = pd.read_csv('C:/share_VM/work/Project_PPI/USA_Taiwan_Rate_Clean_2000_2019.csv')
+X = pd.read_csv('./info/forex_signals_clean.csv', header=None)
+y = pd.read_csv('./info/USD_NTD_Rate_Clean.csv', header=None)
 # x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=4)
 train_data, test_data, train_targets, test_targets = train_test_split(X, y, test_size=0.2, random_state=4)
 # (train_data, train_targets), (test_data, test_targets) = \

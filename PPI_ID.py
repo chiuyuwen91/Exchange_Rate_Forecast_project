@@ -70,12 +70,19 @@ for cat in categories:
         new_df[cat] = df[df[list(df)[0]] == cat]['value']
     except Exception as e:
         print("failed on", cat, e)
-print(new_df)
-# # Spot check the output dataframe
+
+# Spot check the output dataframe
 display(new_df.head())
 
 # Graph the data
 new_df.plot()
 plt.show()
 # Save the dataframe with the economic indicators to a file
-new_df.to_csv("./info/forex_signals.csv")
+new_df.to_csv('./info/forex_signals.csv', index=True)
+
+# Clean the data for training
+rates = pd.read_csv('./info/forex_signals.csv', low_memory=False)
+rateSlice = rates[336:]
+df_new = rateSlice.drop(['date','series_id','value'], axis=1)
+df_new = df_new.fillna(0)
+df_new.to_csv('./info/forex_signals_clean.csv', index=False, header=False)
