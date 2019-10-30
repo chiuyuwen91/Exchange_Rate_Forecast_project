@@ -18,8 +18,6 @@ def build_model(n_dense=6,
                    dropout_rate=0.1,
                    kernel_initializer='lecun_normal',
                    optimizer = 'rmsprop',
-                   # lr = 1e-4,
-                   # loss='mae',
                    num_classes=1,):
 
     model = models.Sequential()
@@ -36,12 +34,11 @@ def build_model(n_dense=6,
         model.add(GaussianNoise(0.01))
         model.add(dropout(dropout_rate))
 
-    # sgd = SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True)
     model.add(Dense(num_classes))
     model.add(Activation(activation))
-    # model.compile(loss='mae',
-    #               metrics=['mae'],
-    #               optimizer=optimizer)
+    model.compile(loss='mae',
+                  metrics=['mae'],
+                  optimizer=optimizer)
 
     return model
 
@@ -49,70 +46,57 @@ X = pd.read_csv('./info/forex_signals_clean.csv', header=None)
 y = pd.read_csv('./info/USD_NTD_Rate_Clean.csv', header=None)
 # x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=4)
 train_data, test_data, train_targets, test_targets = train_test_split(X, y, test_size=0.2, random_state=4)
-# (train_data, train_targets), (test_data, test_targets) = \
-#     boston_housing.load_data()
 
-# mean = train_data.mean(axis=0)
-# std = train_data.std(axis=0)
-# train_data -= mean
-# train_data /= std
-#
-# test_data -= mean
-# test_data /= std
 # ++++++++++++++++K-fold validation
-# k = 4
-# num_val_samples = len(train_data) // k
-# num_epochs = 200
-# all_mae_histories = []
-#
-# for i in range(k):
-#     print('Processing fold #', i)
-#     val_data = train_data[i * num_val_samples: (i + 1) * num_val_samples]
-#     val_targets = train_targets[i * num_val_samples: (i + 1) * num_val_samples]
-#
-#     partial_train_data = np.concatenate(
-#         [train_data[: i * num_val_samples],
-#          train_data[(i + 1) * num_val_samples:]],
-#         axis=0)
-#     partial_train_targets = np.concatenate(
-#         [train_targets[: i * num_val_samples],
-#          train_targets[(i + 1) * num_val_samples:]],
-#         axis=0)
-#     model = build_model()
-#     history = model.fit(partial_train_data,
-#                         partial_train_targets,
-#                         validation_data=(val_data, val_targets),
-#                         epochs=num_epochs,
-#                         batch_size=1,
-#                         verbose=1)
-#     mae_history = history.history['val_mean_absolute_error']
-#     all_mae_histories.append(mae_history)
-#     average_mae_history = [np.mean([x[i] for x in all_mae_histories]) for i in range(num_epochs)]
+k = 4
+num_val_samples = len(train_data) // k
+num_epochs = 200
+all_mae_histories = []
+
+for i in range(k):
+    print('Processing fold #', i)
+    val_data = train_data[i * num_val_samples: (i + 1) * num_val_samples]
+    val_targets = train_targets[i * num_val_samples: (i + 1) * num_val_samples]
+
+    partial_train_data = np.concatenate(
+        [train_data[: i * num_val_samples],
+         train_data[(i + 1) * num_val_samples:]],
+        axis=0)
+    partial_train_targets = np.concatenate(
+        [train_targets[: i * num_val_samples],
+         train_targets[(i + 1) * num_val_samples:]],
+        axis=0)
+    model = build_model()
+    history = model.fit(partial_train_data,
+                        partial_train_targets,
+                        validation_data=(val_data, val_targets),
+                        epochs=num_epochs,
+                        batch_size=1,
+                        verbose=1)
+    mae_history = history.history['val_mean_absolute_error']
+    all_mae_histories.append(mae_history)
+    average_mae_history = [np.mean([x[i] for x in all_mae_histories]) for i in range(num_epochs)]
 
 # +++++++++++++++++ callback
-file_path = 'weights_best.hdf5'
-
-model_ckpt = ModelCheckpoint(filepath=file_path,
+model_ckpt = ModelCheckpoint(filepath='./tmp.hdf5',
                              monitor='val_mean_absolute_error',
-                             save_best_only=True)
+                             save_best_only=False,
+                             mode='auto')
+
 # +++++++++++++++++ triaining final model
 model = build_model()
 model.summary()
-model.compile(loss='mae',
-                  metrics=['mae'],
-                  optimizer='rmsprop')
 model.fit(train_data,
           train_targets,
           epochs=500,
           batch_size=16,
           verbose=1,
           callbacks=[model_ckpt])
-model.save('final_model.h5')
-model.save_weights('model_weights.h5')
+
 test_mae, _ = model.evaluate(test_data, test_targets)
 print('Test MAE:', test_mae)
 
-pred_final = load_model('weights_best.hdf5')
+pred_final = load_model('./tmp.hdf5')
 pred_loadback = model.predict(test_data)
 print(pred_loadback)
 # +++++++++++++++++ matplotlib
