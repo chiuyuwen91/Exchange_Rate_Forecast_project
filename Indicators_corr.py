@@ -6,7 +6,7 @@ rates = pd.read_csv('./info/USD_NTD_Rate02.csv', index_col=0)
 
 # Observe the whole data range and then specific data ranges
 for startYear, endYear in [[1964, 2019]]:
-    df = pd.read_csv('./info/forex_signals.csv', index_col=0)
+    df = pd.read_csv('./info/forex_signals_test.csv', index_col=0)
     # Keep only the data for the time range that we care about
     if startYear >= 1965:
         df = df[df.index >= str(startYear) + '-01']
@@ -24,7 +24,12 @@ for startYear, endYear in [[1964, 2019]]:
 
     correlations = (m.corr()['USD_NTD'].sort_values(ascending=False).dropna())
     corr_limit = correlations[1:26]
-    corr_limit['item'] = corr_limit.index
-    if corr_limit['item'] in (df.columns).astype('str'):
-        new_df = df.loc(corr_limit['item'])
-        print(new_df)
+    s = []
+    for i, idx in enumerate(corr_limit.index):
+        print(i, idx)
+        # if idx in df.columns:
+        new_df = df.loc[:, idx]
+        s.append(new_df)
+    print(s)
+        # else:
+        #     pass
