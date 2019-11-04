@@ -1,4 +1,5 @@
 import pandas as pd
+import csv
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
 
@@ -24,15 +25,45 @@ for startYear, endYear in [[1964, 2019]]:
 
     correlations = (m.corr()['USD_NTD'].sort_values(ascending=False).dropna())
     corr_limit = correlations[1:26]
-    # print(~df.columns.duplicated())
+    # print(corr_limit)
+    # # print(~df.columns.duplicated())
+    # with open('./info/forex_signals_corr.csv', 'w', newline='') as csvfile:
+    #     writer = csv.writer(csvfile, dialect='excel')
+    #     writer.writerow(corr_limit.index)
+    #
+    #     for i, idx in enumerate(corr_limit.index):
+    #         # print(i, idx)
+    #         for a, ano in enumerate(df.columns):
+    #         #     # print(a, ano)
+    #             if idx == ano:
+    #                 new_df = df.loc[:, [idx]]
+    #                 print(new_df)
+    #                 writer.writerow(new_df)
+    #     csvfile.close()
 
-    s = {}
-    for i, idx in enumerate(corr_limit.index):
-        # print(i, idx)
-        # if idx in df.columns:
-        new_df = df.loc[:, idx]
+        # new_df.to_csv('./info/forex_signals_corr.csv', index=True, header=True)
+    # s = []
+    # with open('./info/forex_signals_corr.csv', 'w', newline='') as csvfile:
+    #     writer = csv.DictWriter(csvfile, fieldnames=corr_limit.index, dialect='excel')
+    #     writer.writeheader()
+    #     # writer = csv.DictWriter(csvfile, fieldnames=[idx], dialect='excel')
+    #
+    #     d = {}
+    #     for i, idx in enumerate(corr_limit.index):
+    #         # print(i, idx)
+    #         # if idx in df.columns:
+    #         # writer = csv.DictWriter(csvfile, fieldnames=idx, dialect='excel')
+    #         # writer.writeheader([idx])
+    #
+    #         new_df = df.loc[:, idx]
+    #         # d.index =m.index
+    #         # d[idx] = new_df
+    #         writer.writerow({idx: new_df})
+    #     csvfile.close()
 
-        s.append(new_df)
-    print(s)
+
+        # s.append(new_df)
+    # print(s)
+    # s.to_csv('./info/forex_signals_corr.csv', index=False, header=False)
     #     # else:
     #     #     pass
