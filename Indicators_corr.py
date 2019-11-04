@@ -24,12 +24,15 @@ for startYear, endYear in [[1964, 2019]]:
 
     correlations = (m.corr()['USD_NTD'].sort_values(ascending=False).dropna())
     corr_limit = correlations[1:26]
-    s = []
+    # print(~df.columns.duplicated())
+
+    s = {}
     for i, idx in enumerate(corr_limit.index):
-        print(i, idx)
+        # print(i, idx)
         # if idx in df.columns:
         new_df = df.loc[:, idx]
+
         s.append(new_df)
     print(s)
-        # else:
-        #     pass
+    #     # else:
+    #     #     pass
