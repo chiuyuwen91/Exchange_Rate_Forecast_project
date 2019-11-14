@@ -42,7 +42,7 @@ def build_model(n_dense=6,
     return model
 
 
-X = pd.read_csv('./info/forex_signals_corr_clean01.csv', header=None)
+X = pd.read_csv('./info/forex_signals_corr_clean02.csv', header=None)
 y = pd.read_csv('./info/USD_NTD_Rate_Clean.csv', header=None)
 train_data, test_data, train_targets, test_targets = train_test_split(X, y, test_size=0.2, random_state=4)
 

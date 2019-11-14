@@ -24,7 +24,10 @@ for startYear, endYear in [[1964, 2019]]:
     m = df[list(df)[:]].join(rates, how='inner').fillna(0)
 
     correlations = (m.corr()['USD_NTD'].sort_values(ascending=False).dropna())
-    corr_limit = correlations[1:26]
+    print(correlations[1:30])
+    print(correlations[80:])
+    # print(len(m['USD_NTD']))
+    # corr_limit = correlations[1:26]
     # print(corr_limit)
     # # print(~df.columns.duplicated())
     # with open('./info/forex_signals_corr.csv', 'w', newline='') as csvfile:
